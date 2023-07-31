@@ -1,15 +1,19 @@
-def flatten_dict(input_dict, parent_key="", sep="."):
-    """
-    flatten_dict takes in a dictionary and returns a flatten version
+def flatten_dictionary(dictionary):
+    def flatten_dictionary_helper(initial_key, nested_dict, flat_dict):
+        for key, value in nested_dict.items():
+            if initial_key and key:
+                new_key = f"{initial_key}.{key}"
+            elif initial_key:
+                new_key = initial_key
+            else:
+                new_key = key
 
-    >>> flatten_dict({"key1":1, "key2":{"a":2}})
-    {'key1': 1, 'key2.a': 2}
-    """
-    items = {}
-    for key in input_dict:
-        new_key = f"{parent_key}{sep}{key}" if parent_key else key
-        if type(input_dict[key])== dict:
-            items.update(flatten_dict(input_dict[key], new_key, sep=sep))
-        else:
-            items[new_key] = input_dict[key]
-    return items
+            if not isinstance(value, dict):
+                flat_dict[new_key] = value
+            else:
+                flatten_dictionary_helper(new_key, value, flat_dict)
+
+    flat_dictionary = {}
+    flatten_dictionary_helper("", dictionary, flat_dictionary)
+    return flat_dictionary
+
