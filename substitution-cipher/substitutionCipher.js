@@ -43,7 +43,15 @@ function substitutionCipher(text, key) {
   return normalizeCapitals(cipherText);
 
 }
-
+/**
+ * createCipherMap
+ *
+ * Takes in a key (string) and returns a cipher map to the alphabet
+ * using only unique alphabet characters from the key.
+ *
+ * @param {} key
+ * @returns
+ */
 function createCipherMap (key) {
   const ALPHABET_UPPERCASE = Array.from("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
   key = key.toUpperCase();
