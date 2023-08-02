@@ -40,7 +40,7 @@ function substitutionCipher(text, key) {
     }
   }
 
-  return cipherText;
+  return normalizeCapitals(cipherText);
 
 }
 
@@ -66,4 +66,32 @@ function createCipherMap (key) {
 
   return charMap;
 
+}
+/**
+ *
+ * Takes a string of all capitalized letter and normalize.
+ * Periods must be followed by spaces
+ *
+ * "I AM SO SAD. HE WENT TO HE MOVIES ALONE" =>
+ *
+ * "I am so sad. He went to the movies alone"
+ * @param {} text
+ */
+function normalizeCapitals(text){
+  let normalized = "";
+
+  for (let i=0; i<text.length; i++){
+    if (i===0){ //first letter in string. always capital.
+      normalized += text[i];
+    }
+    //come across a period and is NOT end of the sentence (last char)
+    else if (text[i] === "." && i != text.length-1){
+      normalized += ". " + text[i+2];
+      i+=2;
+    }
+    else {
+      normalized += text[i].toLowerCase();
+    }
+  }
+  return normalized;
 }
